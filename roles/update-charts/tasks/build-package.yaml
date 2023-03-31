@@ -1,0 +1,60 @@
+---
+- set_fact:
+    chart_version: "{{ '{}-{}'.format(chart_item[0], chart_item[1].ref) }}"
+
+- name: "Check if chart already exists in index: {{ chart_version }}"
+  stat:
+    path: "{{ [index_dir, '{}.tgz'.format(chart_version)] | path_join }}"
+  register: chart_stat
+
+- name: "Build package if chart does not exist already: {{ chart_version }}"
+  block:
+    - name: "Pull git repo: {{ chart_version }}"
+      command:
+        cmd: >-
+          git clone '{{ chart_item[1].repo }}'
+          --depth 1
+          --single-branch
+          --branch '{{ chart_item[1].ref }}'
+          '{{ chart_item[0] }}'
+        chdir: "{{ tempdir.path }}"
+
+    - name: "Build chart dependencies: {{ chart_version }}"
+      command:
+        cmd: >-
+          helm dependency build
+          '{{ [chart_item[0], chart_item[1].chart] | path_join }}'
+        chdir: "{{ tempdir.path }}"
+
+    - name: "Build chart package: {{ chart_version }}"
+      command:
+        cmd: >-
+          helm package
+          '{{ [chart_item[0], chart_item[1].chart] | path_join }}'
+        chdir: "{{ tempdir.path }}"
+      register: package
+
+    - name: "Copy built package to index: {{ chart_version }}"
+      copy:
+        src: "{{ package.stdout.split(':', 1)[-1].strip() }}"
+        dest: "{{ index_dir }}"
+        remote_src: true
+      register: chart_copy
+
+    - name: "Update repo index: {{ chart_version }}"
+      command:
+        cmd: "helm repo index docs --url '{{ index_url }}'"
+        chdir: "{{ [index_dir, '..'] | path_join }}"
+
+    - name: "Create commit for new chart: {{ chart_version }}"
+      include_tasks: create-commit.yaml
+      vars:
+        chart_path: "{{ chart_copy.dest }}"
+
+  always:
+    - name: "Cleanup git repo: {{ chart_version }}"
+      file:
+        path: "{{ [tempdir.path, chart_item[0]] | path_join }}"
+        state: absent
+
+  when: not chart_stat.stat.exists

@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  gather_facts: false
+
+  vars:
+    index_dir: "{{ [playbook_dir, '..', 'docs'] | path_join }}"
+
+  roles:
+    - update-charts

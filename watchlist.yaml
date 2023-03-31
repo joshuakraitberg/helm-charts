@@ -1,0 +1,11 @@
+---
+index_url: https://joshuakraitberg.github.io/helm-charts
+watchlist:
+  cert-manager-webhook-duckdns:
+    repo: git@github.com:joshuakraitberg/cert-manager-webhook-duckdns.git
+    ref: 1.4.1
+    chart: charts/cert-manager-webhook-duckdns
+  authentik:
+    repo: git@github.com:joshuakraitberg/goauthentik-helm.git
+    ref: 2023.3.1
+    chart: charts/authentik

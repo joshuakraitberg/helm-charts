@@ -1,0 +1,34 @@
+---
+- name: Verify required vars
+  assert:
+    that:
+      - index_dir | mandatory
+      - index_url | mandatory
+      - watchlist | mandatory
+
+- name: Display watchlist
+  debug:
+    var: watchlist
+
+- name: Fail if git stage is not clean
+  command: git status -s
+  register: git_status
+  failed_when: git_status.stdout.strip()
+
+- name: Setup temp dir
+  tempfile:
+    state: directory
+  register: tempdir
+
+- block:
+    - name: Build packages
+      include_tasks: build-package.yaml
+      loop: "{{ watchlist.items() }}"
+      loop_control:
+        loop_var: chart_item
+
+  always:
+    - name: Cleanup temp dir
+      file:
+        path: "{{ tempdir.path }}"
+        state: absent

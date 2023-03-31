@@ -1,0 +1,6 @@
+---
+- name: "Add chart to stage: {{ chart_version }}"
+  command: "git add --all"
+
+- name: "Create commit: {{ chart_version }}"
+  command: "git commit -m 'Add chart for {{ chart_version }}'"
