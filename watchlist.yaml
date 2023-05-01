@@ -7,5 +7,5 @@ watchlist:
     chart: charts/cert-manager-webhook-duckdns
   authentik:
     repo: git@github.com:joshuakraitberg/goauthentik-helm.git
-    ref: 2023.3.1
+    ref: 2023.4.1
     chart: charts/authentik
