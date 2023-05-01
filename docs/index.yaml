@@ -4,6 +4,89 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: changed
+          description: upgrade to authentik 2023.4.1
+      artifacthub.io/images: |
+        - name: authentik
+          image: ghcr.io/goauthentik/server:2023.4.1
+          whitelisted: true
+        - name: authentik-outpost-proxy
+          image: ghcr.io/goauthentik/proxy:2023.4.1
+          whitelisted: true
+        - name: authentik-outpost-ldap
+          image: ghcr.io/goauthentik/ldap:2023.4.1
+          whitelisted: true
+        - name: authentik-outpost-radius
+          image: ghcr.io/goauthentik/radius:2023.4.1
+          whitelisted: true
+      artifacthub.io/license: MIT
+      artifacthub.io/links: |
+        - name: Github
+          url: https://github.com/goauthentik/authentik
+        - name: Docs
+          url: https://goauthentik.io/docs/
+      artifacthub.io/maintainers: |
+        - name: authentik Team
+          email: hello@goauthentik.io
+          url: https://goauthentik.io
+      artifacthub.io/screenshots: |
+        - title: User interface
+          url: https://goauthentik.io/img/screen_apps_light.jpg
+        - title: Admin interface
+          url: https://goauthentik.io/img/screen_admin_light.jpg
+    apiVersion: v2
+    appVersion: 2023.4.1
+    created: "2023-05-01T23:31:33.793788927Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.goauthentik.io
+      version: 10.16.2
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.goauthentik.io
+      version: 15.7.6
+    - name: common
+      repository: https://library-charts.k8s-at-home.com
+      version: 4.2.0
+    - alias: serviceAccount
+      condition: serviceAccount.create
+      name: authentik-remote-cluster
+      repository: https://charts.goauthentik.io
+      version: 1.1.2
+    description: authentik is an open-source Identity Provider focused on flexibility
+      and versatility
+    digest: 3376b824b1230f3dd20ce7c5b980c2ea627234ca06b4480c66bc62a5ba038724
+    home: https://goauthentik.io
+    icon: https://goauthentik.io/img/icon.png
+    keywords:
+    - authentication
+    - directory
+    - identity
+    - idp
+    - ldap
+    - oauth
+    - oidc
+    - proxy
+    - saml
+    - scim
+    - single-sign-on
+    - sp
+    - sso
+    maintainers:
+    - email: hello@goauthentik.io
+      name: authentik Team
+      url: https://goauthentik.io
+    name: authentik
+    sources:
+    - https://goauthentik.io/docs/
+    - https://github.com/goauthentik/authentik
+    type: application
+    urls:
+    - https://joshuakraitberg.github.io/helm-charts/authentik-2023.4.1.tgz
+    version: 2023.4.1
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: changed
           description: upgrade to authentik 2023.3.1
       artifacthub.io/images: |
         - name: authentik
@@ -32,7 +115,7 @@ entries:
           url: https://goauthentik.io/img/screen_admin_light.jpg
     apiVersion: v2
     appVersion: 2023.3.1
-    created: "2023-04-01T01:16:20.82681588-04:00"
+    created: "2023-05-01T23:31:33.785666867Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -84,7 +167,7 @@ entries:
   cert-manager-webhook-duckdns:
   - apiVersion: v1
     appVersion: 1.4.2
-    created: "2023-04-01T01:16:20.827545518-04:00"
+    created: "2023-05-01T23:31:33.794793966Z"
     description: A Helm chart for cert manager webhook solver for ACME DNS01 challenge
       via DuckDNS
     digest: 85fabcb8475f69e0c2559c02b7fa1bd32b4f6ec28a9083b2ba09fc09ca9b2c9f
@@ -103,7 +186,7 @@ entries:
     version: 1.4.2
   - apiVersion: v1
     appVersion: 1.4.1
-    created: "2023-04-01T01:16:20.827169162-04:00"
+    created: "2023-05-01T23:31:33.794119353Z"
     description: A Helm chart for cert manager webhook solver for ACME DNS01 challenge
       via DuckDNS
     digest: a102c14a73d30a05b7561dd2198cd4ab5d5ff4c1f4ed9f171928e2a3ec829271
@@ -120,4 +203,4 @@ entries:
     urls:
     - https://joshuakraitberg.github.io/helm-charts/cert-manager-webhook-duckdns-1.4.1.tgz
     version: 1.4.1
-generated: "2023-04-01T01:16:20.818190736-04:00"
+generated: "2023-05-01T23:31:33.776476977Z"
