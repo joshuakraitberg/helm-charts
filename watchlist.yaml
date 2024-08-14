@@ -10,6 +10,6 @@ watchlist:
     ref: 2023.4.1
     chart: charts/authentik
   local-path-provisioner:
-    repo: git@github.com:rancher/local-path-provisioner.git
-    ref: v0.0.28
+    repo: git@github.com:joshuakraitberg/local-path-provisioner.git
+    ref: v0.0.28.1
     chart: deploy/chart/local-path-provisioner
